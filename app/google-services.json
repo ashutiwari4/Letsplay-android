@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "801563961155",
+    "firebase_url": "https://letsplay-156705.firebaseio.com",
+    "project_id": "letsplay-156705",
+    "storage_bucket": "letsplay-156705.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801563961155:android:37dec1e9b834fdd6",
+        "android_client_info": {
+          "package_name": "ashutosh.letsplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801563961155-atih9m5f5m4j3aeblninnpf779ik1366.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDSZICh1CxzGd0HQo_8YkZMAIGn8iwZxU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

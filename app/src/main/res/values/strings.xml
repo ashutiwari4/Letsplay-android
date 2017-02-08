@@ -1,0 +1,18 @@
+<resources>
+	<string name="app_name">Letsplay</string>
+	<string name="tab_n_chord">Tab N Chords</string>
+	<string name="nearest_places">Places</string>
+	<string name="already_syn">You have already latest data.</string>
+	<string name="err_unable_to_connect_with_server">Unable to communicate with server. Please try after sometime.</string>
+	<string name="err_unable_to_fetch_location">Unable to fetch your connect location. We\'ll try again.</string>
+	<string name="err_turn_on_gps">We are looking for your location. Please turn on GPS for smooth result, if you\'ve not already.</string>
+	<string name="version_name">Version: %1$s</string>
+	<string name="new_data_available">New Data available</string>
+	<string name="open_now">Open now</string>
+	<string name="close_now">Close now</string>
+	<string name="cont_splash_logo">Splash Logo</string>
+	<string name="cont_institute_image">Institute photo</string>
+	<string name="cont_header_image">Header image</string>
+	<string name="permission_denied">No location permission!</string>
+	<string name="not_available">Not Available</string>
+</resources>
