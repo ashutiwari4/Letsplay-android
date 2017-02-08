@@ -5,4 +5,6 @@ how to play Guitar. Also it shows the nearest guitar institute and details of th
 
 ![alt tag](https://github.com/ashutiwari4/Letsplay-android/blob/master/images/home_screen.png)
 
-[Scoping Document.pdf](https://github.com/ashutiwari4/Letsplay-android/blob/master/Let's%20play%20SRS.pdf)
+Below is the SRS 
+
+[SRS.pdf](https://github.com/ashutiwari4/Letsplay-android/blob/master/Let's%20play%20SRS.pdf)
