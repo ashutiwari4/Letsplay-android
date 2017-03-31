@@ -11,6 +11,7 @@ import android.widget.Toast;
 import ashutosh.letsplay.R;
 import ashutosh.letsplay.data.MyLocalServer;
 import ashutosh.letsplay.data.preferences.AppPreferences;
+import ashutosh.letsplay.models.GenreListModal;
 import ashutosh.letsplay.models.SongListModel;
 import ashutosh.letsplay.retrofit.ApiClient;
 import retrofit2.Call;
@@ -32,9 +33,30 @@ public class SongSyncAdapter extends AbstractThreadedSyncAdapter {
 
         System.out.println("Performing syncing ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         getSongFromCloud("" + AppPreferences.getInstance(getContext()).getPageNo());
-
+        getCategoryFromCloud(1);
     }
 
+
+    private void getCategoryFromCloud(int pageNo) {
+
+        Call<GenreListModal> recentMedia = ApiClient.getService().getGenreList("json", ""+pageNo);
+        recentMedia.enqueue(new Callback<GenreListModal>() {
+            @Override
+            public void onResponse(Call<GenreListModal> call, Response<GenreListModal> response) {
+                GenreListModal genreListModels = response.body();
+                /*if (genreListModels.getNext() == null) {
+                    Toast.makeText(getContext(), getContext().getString(R.string.already_syn), Toast.LENGTH_LONG).show();
+                    return;
+                }*/
+                new MyLocalServer(getContext(), genreListModels);
+            }
+
+            @Override
+            public void onFailure(Call<GenreListModal> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void getSongFromCloud(String pageNo) {
         Call<SongListModel> recentMedia = ApiClient.getService().getSongList("json", pageNo);

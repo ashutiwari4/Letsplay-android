@@ -12,6 +12,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import ashutosh.letsplay.data.tables.category.CategoryContract;
+import ashutosh.letsplay.data.tables.song.SongContract;
+import ashutosh.letsplay.models.GenreListModal;
+import ashutosh.letsplay.models.GenreModal;
 import ashutosh.letsplay.models.SongListModel;
 import ashutosh.letsplay.models.SongsModel;
 
@@ -27,8 +31,12 @@ public class MyLocalServer {
     }
 
 
+    public MyLocalServer(Context context, GenreListModal genreListModal) {
+        updateDatabase(context, genreListModal);
+    }
+
     public void updateDatabase(Context context, SongListModel songListModel) {
-        System.out.println("In my local server......................................");
+        System.out.println("In my song local server......................................");
 
 
         try {
@@ -54,6 +62,32 @@ public class MyLocalServer {
         }
         sendMessage(context);
     }
+
+    public void updateDatabase(Context context, GenreListModal genreListModel) {
+        System.out.println("In my genre local server......................................");
+
+
+        try {
+            ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+            Uri dirUri = CategoryContract.Categories.buildDirUri();
+            //TODO
+            //cpo.add(ContentProviderOperation.newDelete(dirUri).build());
+
+            for (int i = 0; i < genreListModel.getResults().size(); i++) {
+                ContentValues values = new ContentValues();
+                GenreModal genreModal = genreListModel.getResults().get(i);
+                values.put(CategoryContract.Categories._ID, genreModal.getId());
+                values.put(CategoryContract.Categories.CATEGORY, genreModal.getName());
+                cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+            }
+
+            context.getContentResolver().applyBatch(CategoryContract.CONTENT_AUTHORITY, cpo);
+        } catch (RemoteException | OperationApplicationException e) {
+            Log.e(getClass().getSimpleName(), "Error updating content.", e);
+        }
+        sendMessage(context);
+    }
+
 
 
     private void sendMessage(Context context) {

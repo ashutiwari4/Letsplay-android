@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/rv_songs"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_vertical"
+	android:layout_marginBottom="@dimen/_10dp"
+	android:layout_below="@id/view_divider"
+	android:layout_marginTop="@dimen/_10dp"
+	android:choiceMode="singleChoice"
+	android:minHeight="@dimen/_100dp"
+	android:scrollbars="none"/>

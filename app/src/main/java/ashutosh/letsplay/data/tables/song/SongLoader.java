@@ -1,4 +1,4 @@
-package ashutosh.letsplay.data;
+package ashutosh.letsplay.data.tables.song;
 
 import android.content.Context;
 import android.content.CursorLoader;
@@ -8,7 +8,7 @@ import android.net.Uri;
  * Helper for loading a list of articles or a single article.
  */
 public class SongLoader extends CursorLoader {
-    public static int count = 10;
+    private static int count = 10;
 
     public static SongLoader newAllArticlesInstance(Context context, int pageNo) {
         System.out.println("Local data page no " + pageNo);
@@ -55,6 +55,4 @@ public class SongLoader extends CursorLoader {
         int PUBLISHED_DATE = 10;
 
     }
-
-
 }

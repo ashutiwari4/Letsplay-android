@@ -1,4 +1,4 @@
-package ashutosh.letsplay.data;
+package ashutosh.letsplay.data.tables.song;
 
 import android.net.Uri;
 
@@ -6,7 +6,7 @@ public class SongContract {
     public static final String CONTENT_AUTHORITY = "ashutosh.letsplay";
     public static final Uri BASE_URI = Uri.parse("content://ashutosh.letsplay");
 
-    interface SongColumns {
+    public interface SongColumns {
         /**
          * Type: INTEGER PRIMARY KEY AUTOINCREMENT
          */
@@ -51,6 +51,8 @@ public class SongContract {
          * Type: TEXT NOT NULL
          */
         String LINK = "link";
+
+        String GENRE = "genre";
 
     }
 

@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import ashutosh.letsplay.data.SongContract;
+import ashutosh.letsplay.data.tables.song.SongContract;
 
 
 /**

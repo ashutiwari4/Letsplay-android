@@ -13,44 +13,45 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import java.util.List;
 
 import ashutosh.letsplay.R;
 import ashutosh.letsplay.application.BaseFragment;
-import ashutosh.letsplay.data.preferences.AppPreferences;
-import ashutosh.letsplay.data.syncadapter.GenericAccountService;
-import ashutosh.letsplay.data.tables.category.CategoryContract;
-import ashutosh.letsplay.data.tables.category.CategoryLoader;
 import ashutosh.letsplay.data.tables.song.SongContract;
 import ashutosh.letsplay.data.tables.song.SongLoader;
+import ashutosh.letsplay.data.preferences.AppPreferences;
+import ashutosh.letsplay.data.syncadapter.GenericAccountService;
 import ashutosh.letsplay.ui.activities.DetailsActivity;
 import ashutosh.letsplay.ui.adapter.SongAdapter;
 import ashutosh.letsplay.util.AppConstant;
+import ashutosh.letsplay.util.CTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by ashutosh on 20/1/17.
+ * Created by ashutosh on 30/3/17.
  */
 
-public class SongFragment extends BaseFragment implements SongAdapter.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>,
+public class SongViewFragment extends BaseFragment implements SongAdapter.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>,
         View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "SongFragmnet";
+    private static final String TAG = "SongViewFragment";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.fl_parent)
+    FrameLayout flParent;
     @BindView(R.id.rv_songs)
     RecyclerView mRvSongs;
-    @BindView(R.id.cv_new_data_avail)
-    CardView mCvNewData;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
+    @BindView(R.id.tv_more)
+    CTextView ctvCatName;
 
     private SongAdapter songAdapter;
     private boolean loadingMore = false;
@@ -59,7 +60,7 @@ public class SongFragment extends BaseFragment implements SongAdapter.OnItemClic
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_song, container, false);
+        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_song_view, container, false);
         findAllViews(v);
         return v;
     }
@@ -68,16 +69,17 @@ public class SongFragment extends BaseFragment implements SongAdapter.OnItemClic
     private void findAllViews(ViewGroup v) {
         ButterKnife.bind(this, v);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        //mLayoutManager.setReverseLayout(true);
-        mRvSongs.setLayoutManager(mLayoutManager);
 
+        //catName.setText(category);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayout.HORIZONTAL);
+        mRvSongs.setLayoutManager(linearLayoutManager);
+        mRvSongs.setHasFixedSize(true);
 
         songAdapter = new SongAdapter(getContext(), null);
         mRvSongs.setAdapter(songAdapter);
-        songAdapter.setOnItemClickListener(SongFragment.this);
-
-
+        songAdapter.setOnItemClickListener(SongViewFragment.this);
         mRvSongs.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -92,15 +94,15 @@ public class SongFragment extends BaseFragment implements SongAdapter.OnItemClic
                         return;
 
                     loadingMore = true;
-                    //getLocalData(AppConstant.songType);
+                    getLocalData();
                 }
             }
         });
 
-        getLocalData(AppConstant.categoryType);
-        //getLocalData(AppConstant.songType);
+        getLocalData();
+        //mCvNewData.setOnClickListener(this);
 
-        mCvNewData.setOnClickListener(this);
+        //}
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("database_reloaded"));
@@ -119,55 +121,39 @@ public class SongFragment extends BaseFragment implements SongAdapter.OnItemClic
     }
 
 
-    private void getLocalData(int type) {
+    private List<String> getCategories() {
+        return null;
+    }
+
+    private void getLocalData() {
         Bundle b = new Bundle();
         pageNo += 1;
-        b.putInt("type", type);
         b.putInt("page_no", pageNo);
-        getActivity().getLoaderManager().restartLoader(type, b, this);
+        getActivity().getLoaderManager().restartLoader(0, b, this);
     }
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (args.getInt("type") == AppConstant.songType) {
-            AppPreferences.getInstance(getContext()).setPageNo(args.getInt("page_no"));
-            return SongLoader.newAllArticlesInstance(getContext(), args.getInt("page_no"));
-        } else if (args.getInt("type") == AppConstant.categoryType) {
-            AppPreferences.getInstance(getContext()).setPageNo(args.getInt("page_no"));
-            return CategoryLoader.newAllCategoryInstance(getContext(), args.getInt("page_no"));
-        }
-        return null;
+        AppPreferences.getInstance(getContext()).setPageNo(args.getInt("page_no"));
+        return SongLoader.newAllArticlesInstance(getContext(), args.getInt("page_no"));
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (loader.getId() == AppConstant.categoryType) {
-            test(data);
-        } else if (loader.getId() == AppConstant.songType) {
-            Cursor cursor = ((SongAdapter) mRvSongs.getAdapter()).getCursor();
-            if (cursor != null)
-                pageNo = cursor.getCount() / 10;
-            MatrixCursor mx = new MatrixCursor(SongLoader.Query.PROJECTION);
-            fillSongMx(cursor, mx);
-            fillSongMx(data, mx);
+        Cursor cursor = ((SongAdapter) mRvSongs.getAdapter()).getCursor();
+        if (cursor != null)
+            pageNo = cursor.getCount() / 10;
+        MatrixCursor mx = new MatrixCursor(SongLoader.Query.PROJECTION);
+        fillMx(cursor, mx);
+        fillMx(data, mx);
 
-            ((SongAdapter) mRvSongs.getAdapter()).swapCursor(data);
-            toggleProgressbar(progressBar, mRvSongs);
-            loadingMore = false;
-        }
+        ((SongAdapter) mRvSongs.getAdapter()).swapCursor(data);
+        //toggleProgressbar(progressBar,mRvSongs);
+        loadingMore = false;
     }
 
-    private void test(Cursor data){
-        data.moveToPosition(-1);
-        while (data.moveToNext()){
-            System.out.println(data.getString(data.getColumnIndex(CategoryContract.Categories.CATEGORY)));
-
-        }
-
-    }
-
-    private void fillSongMx(Cursor data, MatrixCursor mx) {
+    private void fillMx(Cursor data, MatrixCursor mx) {
         if (data == null)
             return;
 
@@ -200,9 +186,9 @@ public class SongFragment extends BaseFragment implements SongAdapter.OnItemClic
         @Override
         public void onReceive(Context context, Intent intent) {
             updateRefreshingUI(false);
-            mCvNewData.setVisibility(View.VISIBLE);
+            //mCvNewData.setVisibility(View.VISIBLE);
             songAdapter.notifyItemChanged(pageNo * 10);
-            getLocalData(AppConstant.songType);
+            getLocalData();
             //mRvInstitute.scrollToPosition(pageNo * 10);
         }
     };

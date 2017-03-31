@@ -6,10 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ashutosh.letsplay.R;
-import ashutosh.letsplay.data.SongLoader;
+import ashutosh.letsplay.data.tables.song.SongLoader;
 
 /**
  * Created by ashutosh on 20/1/17.
@@ -68,14 +69,14 @@ public class SongAdapter extends CursorRecyclerViewAdapter {
         public View itemView;
         private TextView tvTitle;
         private Cursor cursor;
-        private TextView tvThumbnail;
+        private ImageView ivThumbnail;
 
         public ItemHolder(final View itemView, SongAdapter parent) {
             super(itemView);
             this.parent = parent;
             this.itemView = itemView;
             tvTitle = (TextView) itemView.findViewById(R.id.tv_song_title);
-            tvThumbnail = (TextView) itemView.findViewById(R.id.tv_thumbnail);
+            ivThumbnail = (ImageView) itemView.findViewById(R.id.iv_song_thumbnail);
         }
 
         public void setItem(final Cursor cursor) {
@@ -84,7 +85,7 @@ public class SongAdapter extends CursorRecyclerViewAdapter {
 
             } else {
                 tvTitle.setText(cursor.getString(SongLoader.Query.TITLE));
-                tvThumbnail.setText(cursor.getString(SongLoader.Query.TITLE).substring(0,1));
+                //tvThumbnail.setText(cursor.getString(SongLoader.Query.TITLE).substring(0,1));
                 itemView.setOnClickListener(this);
             }
         }

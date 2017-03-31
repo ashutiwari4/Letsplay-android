@@ -4,11 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static ashutosh.letsplay.data.SongProvider.Tables;
+import ashutosh.letsplay.data.tables.category.CategoryContract;
+import ashutosh.letsplay.data.tables.song.SongContract;
+
+import static ashutosh.letsplay.data.tables.song.SongProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "letsplay.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public ItemsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -18,6 +21,7 @@ public class ItemsDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.SONGS + " ("
                 + SongContract.SongColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + SongContract.SongColumns.GENRE + " TEXT NOT NULL,"
                 + SongContract.SongColumns.TITLE + " TEXT NOT NULL,"
                 + SongContract.SongColumns.COMPOSER + " TEXT,"
                 + SongContract.SongColumns.TAB_AND_CHORD + " TEXT,"
@@ -29,11 +33,17 @@ public class ItemsDatabase extends SQLiteOpenHelper {
                 + SongContract.SongColumns.LINK + " TEXT,"
                 + SongContract.SongColumns.PUBLISHED_DATE + " INTEGER NOT NULL DEFAULT 0"
                 + ")");
+
+        db.execSQL("CREATE TABLE " + Tables.CATEGORY + " ("
+                + CategoryContract.CategoryColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + CategoryContract.CategoryColumns.CATEGORY + " TEXT NOT NULL"
+                + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SONGS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.CATEGORY);
         onCreate(db);
     }
 }

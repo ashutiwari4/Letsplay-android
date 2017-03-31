@@ -24,5 +24,10 @@ public class AppConstant {
 
     public static final int FINE_LOCATION_PERMISSION = 0x0001;
     public static final int ACCESS_COARSE_LOCATION = 0x0002;
+
+    public static final int categoryType = 1;
+    public static final int songType = 1;
+
+
 }
 
