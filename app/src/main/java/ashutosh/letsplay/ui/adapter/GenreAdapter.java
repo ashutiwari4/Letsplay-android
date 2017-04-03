@@ -44,9 +44,6 @@ public class GenreAdapter extends CursorRecyclerViewAdapter {
 
     @Override
     public GenreAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       /* if (viewType == super.getItemCount() - 1) {
-            return new ItemHolder(layoutInflater.inflate(R.layout.footer, parent, false), this);
-        } else*/
         return new GenreAdapter.ItemHolder(layoutInflater.inflate(R.layout.fragment_song_view, parent, false), this);
     }
 
@@ -106,18 +103,13 @@ public class GenreAdapter extends CursorRecyclerViewAdapter {
             Log.e("GenreAdapter", "Pos: " + cursor.getPosition());
             getLocalData(cursor.getInt(CategoryLoader.Query._ID));
 
-            tvMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "click event on more, ", Toast.LENGTH_SHORT).show();
-                }
-            });
+            tvMore.setOnClickListener(this);
         }
 
         private void getLocalData(int genreId) {
             Bundle b = new Bundle();
             b.putInt("page_no", 1);
-            b.putInt("genreId",genreId);
+            b.putInt("genreId", genreId);
             ((Activity) mContext).getLoaderManager().restartLoader(genreId, b, this);
         }
 
@@ -125,6 +117,8 @@ public class GenreAdapter extends CursorRecyclerViewAdapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.tv_more:
+                    Toast.makeText(mContext,"//TODO",Toast.LENGTH_LONG).show();
                 default:
                     final SongAdapter.OnItemClickListener listener = parent.getOnItemClickListener();
                     if (listener != null) {
@@ -136,7 +130,7 @@ public class GenreAdapter extends CursorRecyclerViewAdapter {
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return SongLoader.newAllArticlesInstance(mContext, args.getInt("genreId"),args.getInt("page_no"));
+            return SongLoader.newAllArticlesInstance(mContext, args.getInt("genreId"), args.getInt("page_no"));
         }
 
         @Override
@@ -148,7 +142,7 @@ public class GenreAdapter extends CursorRecyclerViewAdapter {
                 fillSongMx(data, mx);
 
                 ((SongAdapter) rvRow.getAdapter()).swapCursor(data);
-            }else{
+            } else {
                 rvRow.setVisibility(View.GONE);
                 tvNoDataPlaceHolder.setVisibility(View.VISIBLE);
             }

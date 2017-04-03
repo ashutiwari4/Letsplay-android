@@ -57,7 +57,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(SplashActivity.this, DashActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
