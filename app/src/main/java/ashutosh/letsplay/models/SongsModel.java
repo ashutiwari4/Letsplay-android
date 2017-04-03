@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class SongsModel {
 
     private int id;
+    @SerializedName("genre")
     private int genreId;
     @SerializedName("name")
     private String title;

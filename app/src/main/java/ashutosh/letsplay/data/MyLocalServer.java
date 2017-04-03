@@ -24,7 +24,7 @@ import ashutosh.letsplay.models.SongsModel;
  */
 
 public class MyLocalServer {
-    private static final int ITEM_COUNT_IN_PAGE = 5;
+    private static final int ITEM_COUNT_IN_PAGE = 6;
 
     public MyLocalServer(Context context, SongListModel songListModel) {
         updateDatabase(context, songListModel);
@@ -50,6 +50,7 @@ public class MyLocalServer {
                 ContentValues values = new ContentValues();
                 SongsModel songsModel = songListModel.getResults().get(i);
                 values.put(SongContract.Songs._ID, songsModel.getId());
+                values.put(SongContract.Songs.GENRE, songsModel.getGenreId());
                 values.put(SongContract.Songs.TITLE, songsModel.getTitle());
                 values.put(SongContract.Songs.TAB_AND_CHORD, songsModel.getTabsAndChords());
                 values.put(SongContract.Songs.TAGS, songsModel.getTags());

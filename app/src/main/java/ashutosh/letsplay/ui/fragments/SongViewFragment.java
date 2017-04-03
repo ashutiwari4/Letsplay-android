@@ -1,3 +1,4 @@
+/*
 package ashutosh.letsplay.ui.fragments;
 
 import android.app.LoaderManager;
@@ -36,9 +37,11 @@ import ashutosh.letsplay.util.CTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+*/
 /**
  * Created by ashutosh on 30/3/17.
- */
+ *//*
+
 
 public class SongViewFragment extends BaseFragment implements SongAdapter.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>,
         View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -149,7 +152,7 @@ public class SongViewFragment extends BaseFragment implements SongAdapter.OnItem
         fillMx(data, mx);
 
         ((SongAdapter) mRvSongs.getAdapter()).swapCursor(data);
-        //toggleProgressbar(progressBar,mRvSongs);
+        //toggleProgressbar(progressBar,mRvGenre);
         loadingMore = false;
     }
 
@@ -224,3 +227,4 @@ public class SongViewFragment extends BaseFragment implements SongAdapter.OnItem
         refreshData();
     }
 }
+*/

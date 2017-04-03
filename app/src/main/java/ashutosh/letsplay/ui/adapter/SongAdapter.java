@@ -33,10 +33,7 @@ public class SongAdapter extends CursorRecyclerViewAdapter {
 
     @Override
     public SongAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       /* if (viewType == super.getItemCount() - 1) {
-            return new ItemHolder(layoutInflater.inflate(R.layout.footer, parent, false), this);
-        } else*/
-            return new ItemHolder(layoutInflater.inflate(R.layout.row_song, parent, false), this);
+        return new ItemHolder(layoutInflater.inflate(R.layout.row_song, parent, false), this);
     }
 
     @Override
@@ -81,13 +78,10 @@ public class SongAdapter extends CursorRecyclerViewAdapter {
 
         public void setItem(final Cursor cursor) {
             this.cursor = cursor;
-            if (itemView.getId() == R.id.pb_footer) {
+            tvTitle.setText(cursor.getString(SongLoader.Query.TITLE));
+            //tvThumbnail.setText(cursor.getString(SongLoader.Query.TITLE).substring(0,1));
+            itemView.setOnClickListener(this);
 
-            } else {
-                tvTitle.setText(cursor.getString(SongLoader.Query.TITLE));
-                //tvThumbnail.setText(cursor.getString(SongLoader.Query.TITLE).substring(0,1));
-                itemView.setOnClickListener(this);
-            }
         }
 
         @Override

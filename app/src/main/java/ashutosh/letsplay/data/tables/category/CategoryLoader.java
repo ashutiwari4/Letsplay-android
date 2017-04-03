@@ -29,5 +29,8 @@ public class CategoryLoader extends CursorLoader {
                 CategoryContract.CategoryColumns._ID,
                 CategoryContract.CategoryColumns.CATEGORY,
         };
+
+        int _ID = 0;
+        int CATEGORY = 1;
     }
 }

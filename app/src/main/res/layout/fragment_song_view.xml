@@ -2,41 +2,61 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:padding="@dimen/_16dp"
 	android:layout_height="wrap_content">
 	
 	<TextView
-		android:layout_width="wrap_content"
 		android:id="@+id/tv_cat_name"
-		android:text="name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
-		android:layout_height="wrap_content"/>
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true"
+		android:padding="@dimen/_8dp"
+		android:text="name"
+		android:textColor="@color/lighterGray"
+		android:textStyle="bold"/>
 	
 	<TextView
-		android:layout_width="wrap_content"
 		android:id="@+id/tv_more"
-		android:text="More"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
-		android:layout_height="wrap_content"/>
+		android:gravity="bottom"
+		android:padding="@dimen/_8dp"
+		android:text="More"
+		android:textColor="@color/orange"/>
 	
 	<View
-		android:layout_below="@id/tv_cat_name"
-		android:layout_width="match_parent"
 		android:id="@+id/view_divider"
-		android:layout_marginTop="@dimen/_8dp"
-		android:layout_marginBottom="@dimen/_8dp"
-		android:background="@color/lighterGray"
-		android:layout_height="@dimen/_1dp"/>
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/_1dp"
+		android:layout_below="@id/tv_cat_name"
+		android:layout_marginBottom="@dimen/_4dp"
+		android:layout_marginTop="@dimen/_4dp"
+		android:background="@color/lighterGray"/>
 	
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/rv_songs"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"
-		android:layout_marginBottom="@dimen/_10dp"
 		android:layout_below="@id/view_divider"
-		android:layout_marginTop="@dimen/_10dp"
+		android:layout_gravity="center_vertical"
+		android:layout_marginBottom="@dimen/_8dp"
+		android:layout_marginTop="@dimen/_8dp"
 		android:choiceMode="singleChoice"
-		android:minHeight="@dimen/_100dp"
+		android:minHeight="@dimen/_150dp"
 		android:scrollbars="none"/>
+	
+	<ashutosh.letsplay.util.CTextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:visibility="gone"
+		android:layout_below="@id/view_divider"
+		android:gravity="center"
+		android:minHeight="@dimen/_150dp"
+		android:id="@+id/ctv_placeholder"
+		android:text="@string/no_data_available"
+		android:textColor="@color/lighterGray"
+		android:textStyle="italic"/>
+
 </RelativeLayout>

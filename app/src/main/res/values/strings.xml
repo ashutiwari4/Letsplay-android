@@ -15,4 +15,6 @@
 	<string name="cont_header_image">Header image</string>
 	<string name="permission_denied">No location permission!</string>
 	<string name="not_available">Not Available</string>
+	
+	<string name="no_data_available">No song available!</string>
 </resources>

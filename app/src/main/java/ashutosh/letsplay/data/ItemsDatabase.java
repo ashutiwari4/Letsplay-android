@@ -11,7 +11,7 @@ import static ashutosh.letsplay.data.tables.song.SongProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "letsplay.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     public ItemsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -21,7 +21,7 @@ public class ItemsDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.SONGS + " ("
                 + SongContract.SongColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + SongContract.SongColumns.GENRE + " TEXT NOT NULL,"
+                + SongContract.SongColumns.GENRE + " TEXT,"
                 + SongContract.SongColumns.TITLE + " TEXT NOT NULL,"
                 + SongContract.SongColumns.COMPOSER + " TEXT,"
                 + SongContract.SongColumns.TAB_AND_CHORD + " TEXT,"

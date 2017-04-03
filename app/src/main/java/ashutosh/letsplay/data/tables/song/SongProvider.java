@@ -80,7 +80,7 @@ public class SongProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SONG_ITEMS: {
-                final long _id = db.insertWithOnConflict(Tables.SONGS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+                final long _id = db.insertWithOnConflict(Tables.SONGS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 if (_id == -1) {
                     System.out.println("Updating data");
                     db.update(Tables.SONGS, values, "_id=?", new String[]{values.getAsString(SongContract.SongColumns._ID)});
@@ -97,7 +97,6 @@ public class SongProvider extends ContentProvider {
                 getContext().getContentResolver().notifyChange(uri, null);
                 return CategoryContract.Categories.buildItemUri(_id);
             }
-
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
@@ -164,6 +163,4 @@ public class SongProvider extends ContentProvider {
             db.endTransaction();
         }
     }
-
-
 }
